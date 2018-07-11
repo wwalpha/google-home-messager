@@ -1,4 +1,4 @@
-import * as googlehome from 'google-home-notifier';
+const googlehome = require('google-home-notifier');
 
 export const ip = (ip: string, language: string) => googlehome.ip(ip, language);
 
