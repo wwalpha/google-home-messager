@@ -1,17 +1,18 @@
-require('./init')
+require('./init');
 
 import * as AWS from 'aws-sdk';
+import AWSAppSyncClient from 'aws-appsync';
 import gql from 'graphql-tag';
+import * as home from 'src/googlehome';
+import Config from './aws-exports';
 
-// Require exports file with endpoint and auth info
-const aws_exports = require('./aws-exports').default;
+home.ip('172.16.80.3', 'ja');
 
 // Require AppSync module
 const AUTH_TYPE = require('aws-appsync/lib/link/auth-link').AUTH_TYPE;
-const AWSAppSyncClient = require('aws-appsync').default;
 
-const url = aws_exports.ENDPOINT;
-const region = aws_exports.REGION;
+const url = Config.ENDPOINT;
+const region = Config.REGION;
 const type = AUTH_TYPE.AWS_IAM;
 
 // If you want to use API key-based auth
@@ -20,11 +21,11 @@ const apiKey = 'xxxxxxxxx';
 const jwtToken = 'xxxxxxxx';
 
 AWS.config.update({
-  region: aws_exports.REGION,
+  region: Config.REGION,
   credentials: new AWS.Credentials({
-    accessKeyId: aws_exports.AWS_ACCESS_KEY_ID,
-    secretAccessKey: aws_exports.AWS_SECRET_ACCESS_KEY
-  })
+    accessKeyId: Config.AWS_ACCESS_KEY_ID,
+    secretAccessKey: Config.AWS_SECRET_ACCESS_KEY,
+  }),
 });
 const credentials = AWS.config.credentials;
 
@@ -41,46 +42,33 @@ allPost {
 }
 }`);
 
+import * as AppSync from 'src/appsync';
+import { SubscriptionOptions } from 'apollo-client';
+
+AppSync.config({
+  url: Config.ENDPOINT,
+  region: Config.REGION,
+  auth: {
+    type: AUTH_TYPE.AWS_IAM,
+  },
+});
+
 // Set up a subscription query
 const subquery = gql(`
 subscription NewPostSub {
-newPost {
+  newPost {
     __typename
     id
     title
     author
     version
-}
+  }
 }`);
 
-// Set up Apollo client
-const client = new AWSAppSyncClient({
-  url: url,
-  region: region,
-  auth: {
-    type: type,
-    credentials: credentials,
-  }
-});
+const subscription: SubscriptionOptions = {
+  query: subquery,
+};
 
-client.hydrated().then(function (client: any) {
-  //Now run a query
-  client.query({ query: query })
-    .then(function logData(data: any) {
-      console.log('results of query: ', data);
-    })
-    .catch(console.error);
-
-  //Now subscribe to results
-  const observable = client.subscribe({ query: subquery });
-
-  const realtimeResults = function realtimeResults(data: any) {
-    console.log('realtime data: ', data);
-  };
-
-  observable.subscribe({
-    next: realtimeResults,
-    complete: console.log,
-    error: console.log,
-  });
+AppSync.subscribe(query, (value: any) => {
+  console.log(value);
 });
