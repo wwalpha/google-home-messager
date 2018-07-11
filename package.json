@@ -27,13 +27,18 @@
     "apollo-link-http": "^1.5.4",
     "aws-amplify": "^0.4.8",
     "aws-appsync": "^1.2.1",
+    "aws-sdk": "^2.272.1",
     "es6-promise": "^4.2.4",
+    "graphql": "^0.13.2",
     "graphql-tag": "^2.9.2",
     "isomorphic-fetch": "^2.2.1",
     "ws": "^5.2.1"
   },
   "devDependencies": {
+    "ts-loader": "^4.4.2",
     "tslint": "^5.10.0",
-    "tslint-config-airbnb": "^5.9.2"
+    "tslint-config-airbnb": "^5.9.2",
+    "typescript": "^2.9.2",
+    "webpack": "^4.15.1"
   }
 }
