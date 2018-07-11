@@ -9,18 +9,14 @@
   navigator: { onLine: true },
 };
 
-(global as any).localStorage = {
-  store: {},
-  getItem: (key: string) => {
-    return this.store[key];
-  },
-  setItem: (key: string, value: any) => {
-    this.store[key] = value;
-  },
-  removeItem: (key: string) => {
-    delete this.store[key];
-  },
-};
+const LocalStorage = require('node-localstorage').LocalStorage;
+
+const storage = new LocalStorage('./raspberry');
+
+(global as any).localStorage = storage;
+(window as any).localStorage = storage;
+
+(global as any).fetch = require('node-fetch');
 
 require('es6-promise').polyfill();
 require('isomorphic-fetch');

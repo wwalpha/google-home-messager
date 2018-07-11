@@ -7,7 +7,7 @@
     "outDir": "dist",
     "target": "es6",
     "module": "commonjs",
-    "jsx": "react",
+    "moduleResolution": "node",
     "sourceMap": true,
     "noImplicitAny": true,
     "lib": [

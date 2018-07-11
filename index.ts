@@ -1,8 +1,9 @@
 require('./init');
 
 import * as AWS from 'aws-sdk';
-import AWSAppSyncClient from 'aws-appsync';
 import gql from 'graphql-tag';
+import { SubscriptionOptions } from 'apollo-client';
+import * as AppSync from 'src/appsync';
 import * as home from 'src/googlehome';
 import Config from './aws-exports';
 
@@ -11,23 +12,23 @@ home.ip('172.16.80.3', 'ja');
 // Require AppSync module
 const AUTH_TYPE = require('aws-appsync/lib/link/auth-link').AUTH_TYPE;
 
-const url = Config.ENDPOINT;
-const region = Config.REGION;
-const type = AUTH_TYPE.AWS_IAM;
+// const url = Config.ENDPOINT;
+// const region = Config.REGION;
+// const type = AUTH_TYPE.AWS_IAM;
 
-// If you want to use API key-based auth
-const apiKey = 'xxxxxxxxx';
-// If you want to use a jwtToken from Amazon Cognito identity:
-const jwtToken = 'xxxxxxxx';
+// // If you want to use API key-based auth
+// const apiKey = 'xxxxxxxxx';
+// // If you want to use a jwtToken from Amazon Cognito identity:
+// const jwtToken = 'xxxxxxxx';
 
-AWS.config.update({
-  region: Config.REGION,
-  credentials: new AWS.Credentials({
-    accessKeyId: Config.AWS_ACCESS_KEY_ID,
-    secretAccessKey: Config.AWS_SECRET_ACCESS_KEY,
-  }),
-});
-const credentials = AWS.config.credentials;
+// AWS.config.update({
+//   region: Config.REGION,
+//   credentials: new AWS.Credentials({
+//     accessKeyId: Config.AWS_ACCESS_KEY_ID,
+//     secretAccessKey: Config.AWS_SECRET_ACCESS_KEY,
+//   }),
+// });
+// const credentials = AWS.config.credentials;
 
 // Import gql helper and craft a GraphQL query
 const query = gql(`
@@ -42,14 +43,12 @@ allPost {
 }
 }`);
 
-import * as AppSync from 'src/appsync';
-import { SubscriptionOptions } from 'apollo-client';
-
 AppSync.config({
   url: Config.ENDPOINT,
   region: Config.REGION,
   auth: {
-    type: AUTH_TYPE.AWS_IAM,
+    type: AUTH_TYPE.API_KEY,
+    apiKey: () => '',
   },
 });
 
