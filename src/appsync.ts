@@ -1,9 +1,12 @@
 import { AWSAppSyncClientOptions, AWSAppSyncClient } from 'aws-appsync';
 import { SubscriptionOptions } from 'apollo-client';
+import { Observable } from 'zen-observable-ts';
 
 let client: AWSAppSyncClient<any>;
 
 export const config = (options: AWSAppSyncClientOptions) => {
+  console.log(options);
+
   client = new AWSAppSyncClient({
     url: options.url,
     region: options.region,
@@ -11,22 +14,16 @@ export const config = (options: AWSAppSyncClientOptions) => {
   });
 };
 
-export const subscribe = (query: SubscriptionOptions, realtime: any) => {
-  if (!client) throw new Error('client not init');
-  console.log(333);
-  client.hydrated().then((client: AWSAppSyncClient<any>) => {
-    const observable = client.subscribe(query);
+export const subscribe = (query: SubscriptionOptions): Promise<Observable<any>> => new Promise((resolve, reject) => {
+  if (!client) {
+    reject('client not init');
+    return;
+  }
 
-    try {
-      console.log(4444, observable);
-      observable.subscribe({
-        next: realtime,
-        complete: console.log,
-        error: console.log,
-      });
-    } catch (error) {
-      console.log(5555);
-      console.log(error);
-    }
-  }).catch(console.log);
-};
+  client.hydrated()
+    .then((client: AWSAppSyncClient<any>) => {
+      const observable = client.subscribe(query);
+      resolve(observable);
+    })
+    .catch(console.log);
+});
