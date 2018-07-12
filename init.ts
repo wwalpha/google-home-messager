@@ -17,6 +17,7 @@ const storage = new LocalStorage('./raspberry');
 (window as any).localStorage = storage;
 
 (global as any).fetch = require('node-fetch');
+(window as any).LOG_LEVEL = 'DEBUG';
 
 require('es6-promise').polyfill();
 require('isomorphic-fetch');

@@ -10,7 +10,7 @@ home.ip('172.16.80.3', 'ja');
 
 // Require AppSync module
 const AUTH_TYPE = require('aws-appsync/lib/link/auth-link').AUTH_TYPE;
-
+console.log(111);
 AppSync.config({
   url: Config.aws_appsync_graphqlEndpoint,
   region: Config.aws_project_region,
@@ -33,6 +33,7 @@ const subscription: SubscriptionOptions = {
   query: subquery,
 };
 
+console.log(222);
 AppSync.subscribe(subscription, (value: any) => {
   console.log(value);
 });
