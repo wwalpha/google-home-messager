@@ -1,44 +1,98 @@
 require('./init');
 
-import gql from 'graphql-tag';
-import { SubscriptionOptions } from 'apollo-client';
-import * as AppSync from './src/appsync';
-import * as home from './src/googlehome';
 import Config from './aws-exports';
+import AWSAppSyncClient from 'aws-appsync';
+import gql from 'graphql-tag';
 
-home.ip('172.16.80.3', 'ja');
-
-// Require AppSync module
-const AUTH_TYPE = require('aws-appsync/lib/link/auth-link').AUTH_TYPE;
-
-AppSync.config({
-  url: Config.aws_appsync_graphqlEndpoint,
-  region: Config.aws_project_region,
-  auth: {
-    type: AUTH_TYPE.API_KEY,
-    apiKey: () => Config.aws_appsync_apiKey,
-  },
+const AWS = require('aws-sdk');
+AWS.config.update({
+  region: 'ap-northeast-1',
+  credentials: new AWS.Credentials({
+  }),
 });
 
-// Set up a subscription query
-const subquery = gql(`
-subscription AddMessage {
-  subscribeToAddMessage {
-    id
-    signedURL
-  }
-}`);
+const credentials = AWS.config.credentials;
 
-const subscription: SubscriptionOptions = {
-  query: subquery,
+const AUTH_TYPE = require('aws-appsync/lib/link/auth-link').AUTH_TYPE;
+
+const username: string = 'test11';
+const password: string = 'Test1234567890';
+
+const auth = {
+  type: AUTH_TYPE.AWS_IAM,
+  credentials,
 };
 
-AppSync.subscribe(subscription)
-  .then((observable) => {
-    observable.subscribe({
-      next: (value: any) => console.log(value),
-      complete: console.log,
-      error: console.log,
-    });
-  })
-  .catch(console.log);
+console.log(auth);
+
+const client = new AWSAppSyncClient({
+  disableOffline: true,
+  url: Config.aws_appsync_graphqlEndpoint,
+  region: Config.aws_project_region,
+  auth,
+});
+
+// const start = async () => {
+//   const userInfo = await Cognito.login(username, password);
+//   const jwtToken = (await Auth.currentSession()).getIdToken().getJwtToken();
+//   const credentials = await Auth.currentCredentials();
+
+//   // console.log(Auth.currentCredentials());
+
+//   const client = new AWSAppSyncClient({
+//     disableOffline: true,
+//     url: Config.aws_appsync_graphqlEndpoint,
+//     region: Config.aws_project_region,
+//     auth: {
+//       type: AUTH_TYPE.AMAZON_COGNITO_USER_POOLS,
+//       credentials,
+//       jwtToken,
+//     },
+//   });
+
+client.hydrated().then((client) => {
+  console.log(2222222222222222222222222);
+  const subquery = gql(`
+    subscription SubscribeToRecvMessage {
+      subscribeToRecvMessage {
+        signedURL
+      }
+    }`);
+
+  // Now subscribe to results
+  const observable = client.subscribe({ query: subquery });
+  console.log(33333);
+  const realtimeResults = function realtimeResults(data: any) {
+    console.log('realtime data: ', data);
+  };
+
+  observable.subscribe({
+    next: realtimeResults,
+    complete: console.log,
+    error: console.log,
+  });
+});
+// }
+
+// try {
+//   start();
+// } catch (e) {
+//   console.log(e);
+// }
+
+// Cognito.login(username, password).then((user) => {
+//   const SubscribeToEventComments = `subscription SubscribeToRecvMessage {
+//     subscribeToRecvMessage {
+//       signedURL
+//     }
+//   }`;
+
+//   // Subscribe with eventId 123
+//   const subscription = (API.graphql(
+//     graphqlOperation(SubscribeToEventComments)
+//   ) as Observable<any>).subscribe({
+//     next: (eventData) => console.log(eventData.value.data.subscribeToRecvMessage.signedURL)
+//   });
+// });
+
+process.on('unhandledRejection', console.dir);
