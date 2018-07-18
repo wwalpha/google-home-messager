@@ -2,8 +2,8 @@ require('./init');
 
 import Config from './aws-exports';
 import Amplify, { API, graphqlOperation } from 'aws-amplify';
-import * as Cognito from './src/aws/cognito';
-import * as home from './src/googlehome';
+import * as Cognito from './aws/cognito';
+import * as home from './googlehome';
 import * as Observable from 'zen-observable';
 
 Amplify.configure(Config);
@@ -36,6 +36,7 @@ Cognito.login(username, password).then((user) => {
   ) as Observable<any>).subscribe({
     next: (e: any) => realtimeResults(e),
   });
+  console.log('started');
 }).catch(console.log);
 
 process.on('unhandledRejection', console.dir);
