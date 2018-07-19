@@ -3234,9 +3234,9 @@ write-file-atomic@^1.1.4:
     imurmurhash "^0.1.4"
     slide "^1.1.5"
 
-ws@^5.2.2:
-  version "5.2.2"
-  resolved "http://localhost:8081/repository/npm_group/ws/-/ws-5.2.2.tgz#dffef14866b8e8dc9133582514d1befaf96e980f"
+"ws@https://github.com/wwalpha/ws.git":
+  version "5.2.1"
+  resolved "https://github.com/wwalpha/ws.git#3a8edc4e636d84b3d0a2bb1a16df994634d71aa6"
   dependencies:
     async-limiter "~1.0.0"
 
