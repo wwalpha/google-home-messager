@@ -1,1 +1,1 @@
-declare module 'google-home-notifier';
+declare module 'google-home-pusher';

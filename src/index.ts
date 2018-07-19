@@ -3,7 +3,7 @@ require('./init');
 import Config from './aws-exports';
 import Amplify, { API, graphqlOperation } from 'aws-amplify';
 import * as Cognito from './aws/cognito';
-import * as home from './googlehome';
+import * as GoogleHome from 'google-home-pusher';
 import * as Observable from 'zen-observable';
 
 Amplify.configure(Config);
@@ -11,7 +11,7 @@ Amplify.configure(Config);
 const username: string = 'test11';
 const password: string = 'Test1234567890';
 
-home.ip('172.16.80.3', 'ja');
+GoogleHome.ip('172.16.80.3');
 
 Cognito.login(username, password).then((user) => {
 
@@ -20,7 +20,7 @@ Cognito.login(username, password).then((user) => {
     if (subscription) {
       const { signedURL } = subscription.value.data.subscribeToRecvMessage;
 
-      home.play(signedURL);
+      GoogleHome.play(signedURL);
     }
   };
 
