@@ -24,7 +24,6 @@
     "@types/amazon-cognito-auth-js": "^1.2.0",
     "@types/ws": "^5.1.2",
     "aws-amplify": "^1.0.0",
-    "aws-appsync": "^1.2.1",
     "aws-sdk": "^2.272.1",
     "es6-promise": "^4.2.4",
     "google-home-pusher": "https://github.com/wwalpha/google-home-pusher.git",
