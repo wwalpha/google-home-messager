@@ -18,9 +18,16 @@ Cognito.login(username, password).then((user) => {
   const realtimeResults = (subscription: any) => {
     console.log('realtime receive');
     if (subscription) {
-      const { signedURL } = subscription.value.data.subscribeToRecvMessage;
+      const { signedURL, message } = subscription.value.data.subscribeToRecvMessage;
 
-      GoogleHome.play(signedURL);
+      if (signedURL) {
+        GoogleHome.play(signedURL);
+      }
+
+      if (message) {
+        console.log(`message: ${message}`);
+        GoogleHome.notify(message);
+      }
     }
   };
 
