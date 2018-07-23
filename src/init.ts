@@ -11,7 +11,7 @@
 
 const LocalStorage = require('node-localstorage').LocalStorage;
 
-const storage = new LocalStorage('./raspberry');
+const storage = new LocalStorage('./localstorage');
 
 (global as any).localStorage = storage;
 (window as any).localStorage = storage;

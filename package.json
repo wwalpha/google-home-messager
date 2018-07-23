@@ -4,7 +4,6 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "build": "webpack --config webpack.config.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -32,11 +31,8 @@
     "ws": "https://github.com/wwalpha/ws.git"
   },
   "devDependencies": {
-    "ts-loader": "^4.4.2",
     "tslint": "^5.10.0",
     "tslint-config-airbnb": "^5.9.2",
-    "typescript": "^2.9.2",
-    "webpack": "^4.16.1",
-    "webpack-cli": "^3.0.8"
+    "typescript": "^2.9.2"
   }
 }
