@@ -8,24 +8,25 @@ import * as Observable from 'zen-observable';
 
 Amplify.configure(Config);
 
-const username: string = 'test11';
-const password: string = 'Test1234567890';
+const username: string = 'google-home-messager';
+const password: string = 'Messager-99+';
 
 GoogleHome.ip('172.16.80.3');
 
 Cognito.login(username, password).then((user) => {
 
   const realtimeResults = (subscription: any) => {
-    console.log('realtime receive');
     if (subscription) {
       const { signedURL, message } = subscription.value.data.subscribeToRecvMessage;
+
+      console.log('signedURL', signedURL);
+      console.log('message', message);
 
       if (signedURL) {
         GoogleHome.play(signedURL);
       }
 
       if (message) {
-        console.log(`message: ${message}`);
         GoogleHome.notify(message);
       }
     }

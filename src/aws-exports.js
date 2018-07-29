@@ -6,26 +6,22 @@
 
 // AWS Mobile Hub Project Constants
 const awsmobile = {
-    'aws_app_analytics': 'enable',
-    'aws_cognito_identity_pool_id': 'ap-northeast-1:ccefdb22-7a0e-44ae-87f7-53bd8255713f',
+    'aws_cognito_identity_pool_id': 'ap-northeast-1:d67970ff-8958-4536-9228-06a54223d90b',
     'aws_cognito_region': 'ap-northeast-1',
-    'aws_mobile_analytics_app_id': 'bd6c14806bf34ed6898f49bcbd595af0',
-    'aws_mobile_analytics_app_region': 'us-east-1',
-    'aws_project_id': '3897cf27-6d38-4311-83f6-445ee4fbb4ef',
-    'aws_project_name': 'iot-mobile',
+    'aws_project_id': '0d421a8c-1ad1-4689-91d0-7a393bf98194',
+    'aws_project_name': 'SmartHouse',
     'aws_project_region': 'ap-northeast-1',
-    'aws_resource_name_prefix': 'iotmobile-mobilehub-1316078810',
+    'aws_resource_name_prefix': 'smarthouse-mobilehub-467026891',
     'aws_sign_in_enabled': 'enable',
     'aws_user_files': 'enable',
-    'aws_user_files_s3_bucket': 'iotmobile-userfiles-mobilehub-1316078810',
+    'aws_user_files_s3_bucket': 'smarthouse-userfiles-mobilehub-467026891',
     'aws_user_files_s3_bucket_region': 'ap-northeast-1',
     'aws_user_pools': 'enable',
-    'aws_user_pools_id': 'ap-northeast-1_2KoxZ8JxR',
-    'aws_user_pools_web_client_id': '7frpvcbd2r421nbp4j9gfa7s3j',
-    'aws_appsync_graphqlEndpoint': 'https://5xekhmidyjcnxgces66rtaah7u.appsync-api.ap-northeast-1.amazonaws.com/graphql',
+    'aws_user_pools_id': 'ap-northeast-1_YLtRJHIsC',
+    'aws_user_pools_web_client_id': '1ujo2dsrse7rgmvo0bvn207s0t',
+    'aws_appsync_graphqlEndpoint': 'https://gm3opa3fqrh7pexiumbp65hirq.appsync-api.ap-northeast-1.amazonaws.com/graphql',
     'aws_appsync_region': 'ap-northeast-1',
     'aws_appsync_authenticationType': 'AMAZON_COGNITO_USER_POOLS',
-    'aws_appsync_apiKey': 'da2-4zqmgkhvz5b73ajuatcqfpcnfi',
 }
 
 export default awsmobile;
